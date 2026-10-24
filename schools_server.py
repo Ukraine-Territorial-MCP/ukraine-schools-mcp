@@ -44,7 +44,21 @@ def get_education_budget(
     return fetch(budget_code, year)
 
 
+from mcp.server.transport_security import TransportSecuritySettings
+
 app = server.streamable_http_app(
+    transport_security=TransportSecuritySettings(
+        allowed_hosts=[
+            "mcp.edeputat.com",
+            "mcp.edeputat.com:*",
+            "localhost:*",
+            "127.0.0.1:*",
+        ],
+        allowed_origins=[
+            "https://mcp.edeputat.com",
+        ],
+    ),
+
     streamable_http_path="/mcp",
     stateless_http=True,
     json_response=True,
